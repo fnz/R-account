@@ -1,0 +1,3 @@
+fastfood = KFC + MCDONALDS
+cafetera = CAFETERA MAIL.RU
+phone = MEGAFON + MTS
