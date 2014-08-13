@@ -37,7 +37,7 @@ def check_dir(dir_name) :
 def main() :
 	csv_files = glob.glob("*.csv")
 	if len(csv_files) == 1 :
-		print 'Please provide at least one csv file\n'
+		print('Please provide at least one csv file\n')
 		sys.exit(1)
 
 	check_dir("output")
@@ -50,10 +50,10 @@ def main() :
 	fixed_csv_names = ""
 	for data in glob.glob("data/*.csv") :
 		fixed_csv_names = fixed_csv_names + data + " "
+
+	run('Rscript.exe show_me_the_money.R ' + fixed_csv_names)
 	
-	run('Rscript show_me_the_money.R ' + fixed_csv_names)
-	
-	print 'Done'
+	print('Done')
 
 if __name__ == '__main__':
     main()
