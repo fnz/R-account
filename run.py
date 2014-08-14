@@ -15,8 +15,8 @@ def fix_csv(csv_files) :
 		i = i + 1
 		with open(csv_file) as csv :
 			csv_lines = csv.readlines()
-			fixed_scv_name = fixed_scv_nam_base + str(i) + ".csv"
-			with open(fixed_scv_name, "w") as data :
+			fixed_scv_name = fixed_scv_nam_base + str(i) + '.csv'
+			with open(fixed_scv_name, 'w') as data :
 				data.seek(0)
 				data.truncate()
 				if (csv_lines[0]).count(';') == 4 :
@@ -25,9 +25,9 @@ def fix_csv(csv_files) :
 					data.write('"Date";"Date2";"Currency";"Place";"Type";"City";"Country";"Amount";"AbsAmount"\n')
 				
 				for line in csv_lines :
-					line = re.sub(r"(Card \*{3})\d+", "", line)
-					line = line.replace(",", "")
-					line = line.replace("; ", ";")
+					line = re.sub(r'(Card \*{3})\d+', '', line)
+					line = line.replace(',', '')
+					line = line.replace('; ', ';')
 					data.write(line) 
 
 def check_dir(dir_name) : 
@@ -35,23 +35,27 @@ def check_dir(dir_name) :
 		os.mkdir(dir_name)		
 
 def main() :
-	csv_files = glob.glob("*.csv")
+	csv_files = glob.glob('*.csv')
 	if len(csv_files) == 1 :
 		print('Please provide at least one csv file\n')
 		sys.exit(1)
 
-	check_dir("output")
-	check_dir("data")
-	for data in glob.glob("data/*.csv") :
+	check_dir('output')
+	check_dir('data')
+	for data in glob.glob('data/*.csv') :
 		os.remove(data)
 
 	fix_csv(csv_files)
 
-	fixed_csv_names = ""
-	for data in glob.glob("data/*.csv") :
-		fixed_csv_names = fixed_csv_names + data + " "
+	fixed_csv_names = ''
+	for data in glob.glob('data/*.csv') :
+		fixed_csv_names = fixed_csv_names + data + ' '
 
-	run('Rscript.exe show_me_the_money.R ' + fixed_csv_names)
+	if os.name == 'nt' :
+		Rscript_name = 'Rscript.exe'
+	else :
+		Rscript_name = 'Rscript'
+	run(Rscript_name + ' show_me_the_money.R ' + fixed_csv_names)
 	
 	print('Done')
 
